@@ -1118,6 +1118,9 @@ void Genodians::Lighttpd::_update_init_config(Xml_generator &xml)
 						xml.node("fs", [&] { xml.attribute("label", "cert"); }); }); });
 
 				gen_named_dir(xml, "website", [&] (Xml_generator &xml) {
+					gen_named_dir(xml, ".well-known", [&] (Xml_generator &xml) {
+						gen_named_dir(xml, "acme-challenge", [] (Xml_generator &) { });
+						xml.node("ram"); });
 					xml.node("fs", [&] { xml.attribute("label", "website"); }); }); });
 
 			xml.node("libc", [&] {
