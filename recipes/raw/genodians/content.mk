@@ -14,7 +14,7 @@ genodians.tar:
 	       Makefile authors style tool/gosh/gosh tool/gosh/html.gosh
 
 # list of known authors
-AUTHORS := $(notdir $(wildcard $(REP_DIR)/authors/*))
+AUTHORS := chelmuth
 
 # function for determining the URL of the author's ZIP archive
 zip_url = $(shell cat $(REP_DIR)/authors/$1/zip_url)
