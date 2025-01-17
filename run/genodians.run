@@ -102,18 +102,18 @@ install_config {
 </config>}
 
 
-if {![file exists bin/genodians.pem]} {
-	puts "Certificate 'genodians.pem' missing. Please execute"
+if {[expr ![file exists bin/privkey.pem] || ![file exists bin/fullchain.pem]]} {
+	puts "Certificate chain 'fullchain.pem' or private key 'privkey.pem' missing. Please execute"
 	puts ""
-	puts " openssl req -new -x509 -keyout bin/genodians.pem -out bin/genodians.pem -days 365 -nodes"
+	puts " openssl req -new -x509 -keyout bin/privkey.pem -out bin/fullchain.pem -days 365 -nodes"
 	puts ""
-	puts "and copy the resulting file to bin or provide your own examplary file."
+	puts "or provide your own files in bin/fullchain.pem resp. bin/privkey.pem."
 	puts ""
 	exit 0
 }
 
 build { server/date_log app/genodians_manager }
-build_boot_image [list {*}[build_artifacts] chain.pem genodians.pem ]
+build_boot_image [list {*}[build_artifacts] fullchain.pem privkey.pem ]
 
 append qemu_args " -m 1000 "
 append qemu_args " -netdev user,id=net0,hostfwd=tcp::5555-:80,hostfwd=tcp::5556-:443 "
